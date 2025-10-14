@@ -1,0 +1,8 @@
+A Vite Project setup needs the following packages for the ground-breaking
+
+1. Configure eslint for cachng erros and syntax correction while coding
+npm i --save-dev vite-plugin-eslint eslint-config-react-app eslint
+
+2. STEP TWO
+create .eslintrc.json file to configure the react eslint rules
+refere as created in the file for this projct
