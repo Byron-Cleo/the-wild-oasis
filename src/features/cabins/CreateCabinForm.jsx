@@ -1,4 +1,3 @@
-// import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Input from "../../ui/Input";
@@ -30,7 +29,7 @@ function CreateCabinForm() {
   });
 
   function onSubmit(data) {
-    mutate({...data, image: data.image.at(0)});
+    mutate({...data, image: data.image[0]});
   }
 
   function onError(errors) {
@@ -114,7 +113,6 @@ function CreateCabinForm() {
         <FileInput
           id="image"
           accept="image/*"
-          type="file"
           {...register("image", {
             required: "This field is required.",
           })}
