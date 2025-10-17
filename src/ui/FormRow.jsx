@@ -47,7 +47,7 @@ const Error = styled.span`
   color: var(--color-red-700);
 `;
 
-function FormRow({ label, error, children, orientation="j" }) {
+function FormRow({ label, error, children, orientation }) {
   return (
     <StyledFormRow orientation={orientation}>
       {label && <Label htmlFor={children.props.id}>{label}</Label>}
