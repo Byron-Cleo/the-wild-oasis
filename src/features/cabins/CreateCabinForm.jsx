@@ -15,7 +15,6 @@ function CreateCabinForm() {
   //1.react hook form in action here
   const { register, handleSubmit, reset, getValues, formState } = useForm();
   const { errors } = formState;
-  console.log("QQQ", errors);
 
   //2.react query in action here
   const { mutate, isLoading: isCreating } = useMutation({
@@ -31,12 +30,11 @@ function CreateCabinForm() {
   });
 
   function onSubmit(data) {
-    // console.log(data);
-    mutate(data);
+    mutate({...data, image: data.image.at(0)});
   }
 
   function onError(errors) {
-    console.log("EEEEE", errors.discount.message);
+    console.log("----", errors);
   }
 
   return (
@@ -52,7 +50,6 @@ function CreateCabinForm() {
         />
       </FormRow>
 
-      {/* <FormRow> */}
       <FormRow label="Maximum capacity" error={errors?.maxCapacity?.message}>
         <Input
           type="number"
@@ -67,7 +64,7 @@ function CreateCabinForm() {
           })}
         />
       </FormRow>
-      {/* <FormRow> */}
+
       <FormRow label="Regular price" error={errors?.regularPrice?.message}>
         <Input
           type="number"
@@ -83,7 +80,6 @@ function CreateCabinForm() {
         />
       </FormRow>
 
-      {/* <FormRow> */}
       <FormRow label="Discount" error={errors?.discount?.message}>
         <Input
           type="number"
@@ -99,7 +95,6 @@ function CreateCabinForm() {
         />
       </FormRow>
 
-      {/* <FormRow> */}
       <FormRow
         label="Description for website"
         error={errors?.description?.message}
@@ -115,9 +110,15 @@ function CreateCabinForm() {
         />
       </FormRow>
 
-      {/* <FormRow> */}
       <FormRow label="Cabin photo">
-        <FileInput id="image" accept="image/*" type="file"/>
+        <FileInput
+          id="image"
+          accept="image/*"
+          type="file"
+          {...register("image", {
+            required: "This field is required.",
+          })}
+        />
       </FormRow>
 
       <FormRow>
