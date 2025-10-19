@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import styled from "styled-components";
 
 const StyledTable = styled.div`
@@ -57,3 +58,25 @@ const Empty = styled.p`
   text-align: center;
   margin: 2.4rem;
 `;
+
+function Table({ columns, children }) {}
+function Header({ children }) {}
+function Row({ children }) {}
+function Body({ children }) {}
+
+Table.propTypes = {
+  columns: PropTypes.string,
+  children: PropTypes.element,
+};
+Row.propTypes = {
+  children: PropTypes.element,
+};
+Body.propTypes = {
+  children: PropTypes.element,
+};
+
+Table.Header = Header;
+Table.Row = Header;
+Table.Body = Body;
+
+export default Table;
