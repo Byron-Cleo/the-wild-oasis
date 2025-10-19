@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { createContext, useContext } from "react";
 import styled from "styled-components";
 
 const StyledTable = styled.div`
@@ -29,9 +30,9 @@ const StyledHeader = styled(CommonRow)`
   color: var(--color-grey-600);
 `;
 
-const StyledBody = styled.section`
-  margin: 0.4rem 0;
-`;
+// const StyledBody = styled.section`
+//   margin: 0.4rem 0;
+// `;
 
 const StyledRow = styled(CommonRow)`
   padding: 1.2rem 2.4rem;
@@ -52,31 +53,62 @@ const Footer = styled.footer`
   }
 `;
 
-const Empty = styled.p`
-  font-size: 1.6rem;
-  font-weight: 500;
-  text-align: center;
-  margin: 2.4rem;
-`;
+// const Empty = styled.p`
+//   font-size: 1.6rem;
+//   font-weight: 500;
+//   text-align: center;
+//   margin: 2.4rem;
+// `;
+//COMPOUND COMPONENT IN ACTION
 
-function Table({ columns, children }) {}
-function Header({ children }) {}
-function Row({ children }) {}
-function Body({ children }) {}
+//1. creating global context for storing state
+const TableContext = createContext();
+
+function Table({ columns, children }) {
+  return (
+    <TableContext.Provider value={{columns}}>
+      <StyledTable role="table">
+        {children}
+      </StyledTable>
+    </TableContext.Provider>
+  );
+}
+function Header({ children }) {
+  const { columns } = useContext(TableContext);
+  return (
+    <StyledHeader role="row" columns={columns}>
+      {children}
+    </StyledHeader>
+  );
+}
+function Row({ children }) {
+  const { columns } = useContext(TableContext);
+  return (
+    <StyledRow role="row" columns={columns}>
+      {children}
+    </StyledRow>
+  );
+}
+// function Body({ children }) {}
 
 Table.propTypes = {
   columns: PropTypes.string,
   children: PropTypes.element,
 };
-Row.propTypes = {
-  children: PropTypes.element,
-};
-Body.propTypes = {
+Header.propTypes = {
   children: PropTypes.element,
 };
 
+Row.propTypes = {
+  children: PropTypes.element,
+};
+// Body.propTypes = {
+//   children: PropTypes.element,
+// };
+
 Table.Header = Header;
 Table.Row = Header;
-Table.Body = Body;
+// Table.Body = Body;
+Table.Footer = Footer;
 
 export default Table;
