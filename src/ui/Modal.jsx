@@ -1,6 +1,3 @@
-import styled from "styled-components";
-import PropTypes from "prop-types";
-import { HiXMark } from "react-icons/hi2";
 import {
   cloneElement,
   createContext,
@@ -10,6 +7,11 @@ import {
   useState,
 } from "react";
 import { createPortal } from "react-dom";
+import styled from "styled-components";
+import PropTypes from "prop-types";
+import { HiXMark } from "react-icons/hi2";
+
+import { useOutsideClick } from "../hooks/useOutsideClick";
 
 const StyledModal = styled.div`
   position: fixed;
@@ -89,25 +91,8 @@ function Open({ children, opens: opensWindowName }) {
 function Window({ children, name }) {
   //getting values from the global context
   const { openName, close } = useContext(Modalcontext);
-  const ref = useRef();
-  console.log("TT", ref.current);
 
-  useEffect(
-    function () {
-      function handleClick(e) {
-        if (ref.current && !ref.current.contains(e.target)) {
-          console.log("Click outside");
-          close();
-        }
-      }
-
-      document.addEventListener("click", handleClick, true);
-
-      //this is to unmount the eventlistener when the component unmounts
-      return () => document.removeEventListener("click", handleClick, true);
-    },
-    [close]
-  );
+  const ref = useOutsideClick(close);
 
   if (name !== openName) return null;
 
