@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import { createContext, useContext } from "react";
 import styled from "styled-components";
+import Empty from "../ui/Empty";
 
 const StyledTable = styled.div`
   border: 1px solid var(--color-grey-200);
@@ -30,9 +31,9 @@ const StyledHeader = styled(CommonRow)`
   color: var(--color-grey-600);
 `;
 
-// const StyledBody = styled.section`
-//   margin: 0.4rem 0;
-// `;
+const StyledBody = styled.section`
+  margin: 0.4rem 0;
+`;
 
 const StyledRow = styled(CommonRow)`
   padding: 1.2rem 2.4rem;
@@ -66,17 +67,15 @@ const TableContext = createContext();
 
 function Table({ columns, children }) {
   return (
-    <TableContext.Provider value={{columns}}>
-      <StyledTable role="table">
-        {children}
-      </StyledTable>
+    <TableContext.Provider value={{ columns }}>
+      <StyledTable role="table">{children}</StyledTable>
     </TableContext.Provider>
   );
 }
 function Header({ children }) {
   const { columns } = useContext(TableContext);
   return (
-    <StyledHeader role="row" columns={columns}>
+    <StyledHeader role="row" columns={columns} as="header">
       {children}
     </StyledHeader>
   );
@@ -89,7 +88,10 @@ function Row({ children }) {
     </StyledRow>
   );
 }
-// function Body({ children }) {}
+function Body({ data, render }) {
+  if (!data.length) return <Empty>No data to show at the moment</Empty>;
+  return <StyledBody> {data.map(render)}</StyledBody>;
+}
 
 Table.propTypes = {
   columns: PropTypes.string,
@@ -102,13 +104,14 @@ Header.propTypes = {
 Row.propTypes = {
   children: PropTypes.element,
 };
-// Body.propTypes = {
-//   children: PropTypes.element,
-// };
+Body.propTypes = {
+  data: PropTypes.array,
+  render: PropTypes.function,
+};
 
 Table.Header = Header;
 Table.Row = Header;
-// Table.Body = Body;
+Table.Body = Body;
 Table.Footer = Footer;
 
 export default Table;
