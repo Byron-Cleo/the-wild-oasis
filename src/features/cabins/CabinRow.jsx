@@ -4,7 +4,7 @@ import { formatCurrency } from "../../utils/helpers";
 import CreateCabinForm from "./CreateCabinForm";
 import { useDeleteCabin } from "./useDeleteCabin";
 import { HiPencil, HiSquare2Stack, HiTrash } from "react-icons/hi2";
-// import { useCreateCabin } from "./useCreateCabin";
+import { useCreateCabin } from "./useCreateCabin";
 import Modal from "../../ui/Modal";
 import ConfirmDelete from "../../ui/ConfirmDelete";
 import Menus from "../../ui/Menus";
@@ -50,7 +50,7 @@ const Discount = styled.div`
 
 function CabinRow({ cabin }) {
   const { isDeleting, deleteCabin } = useDeleteCabin();
-  // const { isCreating, createCabin } = useCreateCabin();
+  const { isCreating, createCabin } = useCreateCabin();
 
   const {
     id: cabinId,
@@ -59,19 +59,19 @@ function CabinRow({ cabin }) {
     regularPrice,
     discount,
     image,
-    // description,
+    description,
   } = cabin;
 
-  // function handleDuplicate() {
-  //   createCabin({
-  //     name: `copy of ${name}`,
-  //     maxCapacity,
-  //     regularPrice,
-  //     discount,
-  //     image,
-  //     description,
-  //   });
-  // }
+  function handleDuplicate() {
+    createCabin({
+      name: `copy of ${name}`,
+      maxCapacity,
+      regularPrice,
+      discount,
+      image,
+      description,
+    });
+  }
 
   return (
     <>
@@ -86,16 +86,11 @@ function CabinRow({ cabin }) {
           <span>&mdash;</span>
         )}
         <div>
-          <Modal>
-            <Modal.Open opens="create">
-              <button>
-                <HiSquare2Stack /> Create
-              </button>
-            </Modal.Open>
-            <Modal.Window name="create">
-              <CreateCabinForm />
-            </Modal.Window>
+          <button disabled={isCreating} onClick={handleDuplicate}>
+            <HiSquare2Stack /> Create
+          </button>
 
+          <Modal>
             <Modal.Open opens="edit">
               <button>
                 <HiPencil /> Edit
@@ -128,7 +123,6 @@ function CabinRow({ cabin }) {
               <Menus.Button>Delete</Menus.Button>
             </Menus.List>
           </Menus.Menu>
-          
         </div>
       </TableRow>
     </>
