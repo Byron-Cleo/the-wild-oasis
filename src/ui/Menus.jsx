@@ -145,7 +145,7 @@ List.propTypes = {
 Button.propTypes = {
   children: PropTypes.element,
   icon: PropTypes.element,
-  onClick: PropTypes.function,
+  onClick: PropTypes.func,
 };
 
 Menus.Menu = Menu;
