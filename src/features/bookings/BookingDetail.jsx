@@ -20,18 +20,18 @@ const HeadingGroup = styled.div`
 
 function BookingDetail() {
   const { booking, isLoading } = useBooking();
-  // console.log(booking)
-  const { status, id: bookingId } = booking;
-
   const moveBack = useMoveBack();
 
+  if (isLoading) return <Spinner />;
+
+  const { id: bookingId, status } = booking;
+  
   const statusToTagName = {
     unconfirmed: "blue",
     "checked-in": "green",
     "checked-out": "silver",
   };
 
-  if (isLoading) return <Spinner />;
 
   return (
     <>
