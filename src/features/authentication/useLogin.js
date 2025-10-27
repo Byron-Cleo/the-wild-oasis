@@ -1,10 +1,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { loginApi } from "../../services/apiAuth";
+import { login as loginApi } from "../../services/apiAuth";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 export function useLogin() {
-    const queryclient = useQueryClient();
+  const queryclient = useQueryClient();
   const navigate = useNavigate();
 
   const { mutate: login, isLoading } = useMutation({
@@ -12,7 +12,8 @@ export function useLogin() {
     onSuccess: (user) => {
       //this is manually setting data into the react query cache
       queryclient.setQueriesData(["user"], user.user);
-      navigate("/dashboard");
+      //the replace property is to delete where we came from in the history stack
+      navigate("/dashboard", { replace: true });
     },
     onError: (error) => {
       console.log("error from login", error);
