@@ -10,6 +10,7 @@ import Table from "../../ui/Table";
 import { formatCurrency } from "../../utils/helpers";
 import { formatDistanceFromNow } from "../../utils/helpers";
 import Menus from "../../ui/Menus";
+import { useCheckout } from "../check-in-out/useCheckout";
 
 const Cabin = styled.div`
   font-size: 1.6rem;
@@ -54,6 +55,7 @@ function BookingRow({
 }) {
   // console.log(bookingId, created_at, numGuests);
   const navigate = useNavigate();
+  const { checkout, isCheckingOut } = useCheckout();
 
   const statusToTagName = {
     unconfirmed: "blue",
@@ -109,12 +111,12 @@ function BookingRow({
           {status === "checked-in" && (
             <Menus.Button
               icon={<HiArrowUpOnSquare />}
-              onClick={() => {}}
+              onClick={() => checkout(bookingId)}
+              disabled={isCheckingOut}
             >
               Check Out
             </Menus.Button>
           )}
-
         </Menus.List>
       </Menus.Menu>
     </Table.Row>
