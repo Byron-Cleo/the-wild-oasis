@@ -11,7 +11,7 @@ export function useLogin() {
     mutationFn: ({ email, password }) => loginApi({ email, password }),
     onSuccess: (user) => {
       //this is manually setting data into the react query cache
-      queryclient.setQueriesData(["user"], user.user);
+      queryclient.setQueryData(["user"], user.user);
       //the replace property is to delete where we came from in the history stack
       navigate("/dashboard", { replace: true });
     },
