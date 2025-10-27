@@ -1,22 +1,21 @@
 import styled from "styled-components";
 import { format } from "date-fns";
 
-import { box } from "styles/styles";
-import { formatDistanceFromNow } from "utils/helpers";
-import { isToday } from "date-fns/esm";
-import { formatCurrency } from "utils/helpers";
+// import { box } from "styles/styles";
+import { formatDistanceFromNow } from "../../utils/helpers";
+import { isToday } from "date-fns";
+import { formatCurrency } from "../../utils/helpers";
 import {
   HiOutlineChatBubbleBottomCenterText,
   HiOutlineCheckCircle,
   HiOutlineCurrencyDollar,
   HiOutlineHomeModern,
 } from "react-icons/hi2";
-import DataItem from "ui/DataItem";
-import { Flag } from "ui/Flag";
+import DataItem from "../../ui/DataItem";
+import { Flag } from "../../ui/Flag";
 import PropTypes from "prop-types";
 
 const StyledBookingDataBox = styled.section`
-  ${box} /* padding: 3.2rem 4rem; */
   overflow: hidden;
 `;
 
@@ -206,7 +205,7 @@ BookingDataBox.propTypes = {
     }),
     cabins: PropTypes.shape({
       name: PropTypes.string.isRequired,
-    })
+    }),
   }),
 };
 
