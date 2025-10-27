@@ -1,6 +1,6 @@
 import supabase from "./supabase";
 
-export async function loginApi({ email, password }) {
+export async function login({ email, password }) {
   let { data, error } = await supabase.auth.signInWithPassword({
     email,
     password,
@@ -20,4 +20,9 @@ export async function getCurrentUser() {
   if(error) throw new Error(error.message);
 
   return data?.user;
+}
+
+export async function logout() {
+    const {error} = await supabase.auth.signOut()
+    if(error) throw new Error (error.message)
 }
