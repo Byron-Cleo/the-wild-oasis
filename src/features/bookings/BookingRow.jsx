@@ -65,7 +65,6 @@ function BookingRow({
   const navigate = useNavigate();
   const { checkout, isCheckingOut } = useCheckout();
   const { isDeleting, deleteBooking } = useDeleteBooking();
-  console.log(isDeleting, deleteBooking);
 
   const statusToTagName = {
     unconfirmed: "blue",
@@ -136,9 +135,11 @@ function BookingRow({
             </Modal.Open>
           </Menus.List>
         </Menus.Menu>
+
         <Modal.Window name="delete">
           <ConfirmDelete
             resorceName="booking"
+            disabled={isDeleting}
             onConfirm={() => deleteBooking(bookingId)}
           />
         </Modal.Window>
